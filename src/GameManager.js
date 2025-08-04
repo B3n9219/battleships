@@ -18,12 +18,6 @@ export class GameManager {
         this.robot.gameboard.placeShips()
         this.displayManager.updateDisplay()
     }
-    populateGameboard(gameboard) {
-        gameboard.placeShip([{x: 0, y: 1}, {x: 0, y: 2}, {x: 0, y: 3}])
-        gameboard.placeShip([{x: 8, y: 1}, {x: 8, y: 2}, {x: 8, y: 3}, {x: 8, y: 4}])
-        gameboard.placeShip([{x: 9, y: 9}, {x: 8, y: 9}])
-        gameboard.placeShip([{x: 5, y: 3}, {x: 5, y: 4}, {x: 5, y: 5}, {x: 5, y: 6}, {x: 5, y: 7}])
-    }
     playRound(cord) {
         console.log(cord)
         if (!this.robot.gameboard.isCordNew(cord)) {

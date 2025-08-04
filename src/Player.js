@@ -1,6 +1,3 @@
-import {Gameboard} from "./Gameboard";
-
-
 export class Player {
     constructor(gameboard) {
         this.gameboard = gameboard
@@ -27,7 +24,7 @@ export class Robot extends Player {
                     const hitCord = ship.hitCords[0]
                     for (let i = 0; i < changes.length; i++) {
                         cord = {x: hitCord.x + changes[i].x, y: hitCord.y + changes[i].y}
-                        if (gameboard.isCordNew(cord)) {
+                        if (gameboard.isCordNew(cord) && gameboard.cordOnBoard(cord)) {
                             return cord
                         }
                     }
@@ -38,11 +35,11 @@ export class Robot extends Player {
                     const xDiff = ship.hitCords[lastIndex].x - ship.hitCords[lastIndex - 1].x
                     const yDiff = ship.hitCords[lastIndex].y - ship.hitCords[lastIndex - 1].y
                     cord = {x: ship.hitCords[lastIndex].x + xDiff, y: ship.hitCords[lastIndex].y + yDiff}
-                    if (gameboard.isCordNew(cord)) {
+                    if (gameboard.isCordNew(cord) && gameboard.cordOnBoard(cord)) {
                         return cord
                     }
                     cord = {x: ship.hitCords[0].x - xDiff, y: ship.hitCords[0].y - yDiff}
-                    if (gameboard.isCordNew(cord)) {
+                    if (gameboard.isCordNew(cord) && gameboard.cordOnBoard(cord)) {
                         return cord
                     }
                 }
