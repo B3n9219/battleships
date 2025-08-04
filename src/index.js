@@ -2,5 +2,10 @@ import "./styles.css";
 
 import {GameManager} from "./GameManager";
 
-const gameManager = new GameManager()
+let gameManager = new GameManager()
 gameManager.start()
+
+document.querySelector(".reset").addEventListener("click", () => {
+    gameManager = new GameManager()
+    gameManager.start()
+})

@@ -12,6 +12,11 @@ export class Ship {
         }
         this.hitCords.push(cord)
     }
+    sortHitCords() {
+        let axis
+        this.hitCords[0].x === this.hitCords[1].x? axis = "y": axis = "x"
+        this.hitCords.sort((a, b) => a[axis] - b[axis])
+    }
     isSunk() {
         return this.hitCount >= this.length;
     }

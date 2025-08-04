@@ -1,4 +1,4 @@
-import { Ship } from "./Ship.js";
+import {Ship} from "./Ship.js";
 
 export class Gameboard {
     constructor(size = 10) {
@@ -61,8 +61,10 @@ export class Gameboard {
         for (let ship of this.ships) {
             for (let shipCord of ship.cords) {
                 if (shipCord.x === cord.x && shipCord.y === cord.y) {
-                    ship.hit(cord)
-                    return
+                    if (!ship.isCordHit(cord)) {
+                        ship.hit(cord)
+                        return
+                    }
                 }
             }
         }
@@ -110,6 +112,30 @@ export class Gameboard {
         return true
     }
     placeShips() {
-
+        const lengths = [2, 3, 3, 4, 5]
+        for (let length of lengths) {
+            let axis, direction
+            Math.random() <= 0.5? axis = "x": axis = "y"
+            Math.random() <= 0.5? direction = 1: direction = -1
+            let valid = false
+            let cords = []
+            while(!valid) {
+                let testCords = []
+                let startCord = {
+                    x: Math.floor(Math.random() * this.size),
+                    y: Math.floor(Math.random() * this.size)
+                }
+                for (let i = 0; i < length; i++) {
+                    let cord = {x: startCord.x, y: startCord.y}
+                    cord[axis] += i * direction
+                    testCords.push(cord)
+                }
+                if (this.cordsValid(testCords) && this.cordsFree(testCords)) {
+                    cords = testCords
+                    valid = true
+                }
+            }
+            this.placeShip(cords)
+        }
     }
 }

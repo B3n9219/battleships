@@ -24,11 +24,11 @@
     border: 1px solid black;
 }
 
-.empty {
+.empty, .ship.enemy {
     background-color: dodgerblue;
 }
 
-.ship {
+.ship:not(.enemy) {
     background-color: darkgrey;
 }
 

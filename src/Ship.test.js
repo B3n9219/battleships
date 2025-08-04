@@ -68,3 +68,14 @@ describe("Ship.isCordHit()", () => {
         expect(ship.isCordHit({x: 0, y: 0})).toBe(true)
     })
 })
+
+describe("Ship.sortHitCords()", () => {
+    test("1", () => {
+        const ship = new Ship(5)
+        ship.hit({x:5, y:5})
+        ship.hit({x:4, y:5})
+        ship.hit({x:6, y:5})
+        ship.sortHitCords()
+        expect(ship.hitCords).toEqual([{x:4, y:5}, {x:5, y:5}, {x:6, y:5}])
+    })
+})

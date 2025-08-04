@@ -12,10 +12,13 @@ export class DisplayManager {
         const enemyBoard = this.renderedGameboards[1]
         const cells = enemyBoard.querySelectorAll(".cell")
         for (let cell of cells) {
+            cell.classList.add("enemy")
             cell.addEventListener('click', () => {
                 this.playRound({x: Number(cell.dataset.x), y: Number(cell.dataset.y)})
             })
         }
+
+        const button = document.createElement("button")
     }
     renderGameboard(gameboard) {
         const boardContainer = document.createElement("div")

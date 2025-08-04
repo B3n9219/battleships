@@ -12,11 +12,11 @@ export class GameManager {
         this.displayManager = new DisplayManager(this.gameContainer, this.player.gameboard, this.robot.gameboard, this.playRound)
     }
     start() {
-        this.populateGameboard(this.player.gameboard)
-        this.populateGameboard(this.robot.gameboard)
-        this.player.gameboard.recieveAttack({x: 9, y: 9})
-        this.player.gameboard.recieveAttack({x: 0, y: 9})
-        this.displayManager.renderDisplay()
+        // this.populateGameboard(this.player.gameboard)
+        // this.populateGameboard(this.robot.gameboard)
+        this.player.gameboard.placeShips()
+        this.robot.gameboard.placeShips()
+        this.displayManager.updateDisplay()
     }
     populateGameboard(gameboard) {
         gameboard.placeShip([{x: 0, y: 1}, {x: 0, y: 2}, {x: 0, y: 3}])
@@ -26,8 +26,11 @@ export class GameManager {
     }
     playRound(cord) {
         console.log(cord)
+        if (!this.robot.gameboard.isCordNew(cord)) {
+            return
+        }
         this.robot.gameboard.recieveAttack(cord)
-        this.player.gameboard.recieveAttack(this.robot.chooseCord())
+        this.player.gameboard.recieveAttack(this.robot.chooseCord(this.player.gameboard))
         this.displayManager.updateDisplay()
         if (this.robot.gameboard.allShipsSunk()) {
             alert("Player WINS")
