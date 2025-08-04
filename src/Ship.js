@@ -1,12 +1,24 @@
 export class Ship {
-    constructor(length, hitCount = 0) {
+    constructor(length) {
         this.length = length
-        this.hitCount = hitCount
+        this.cords = null
+        this.hitCords = []
     }
-    hit() {
-        this.hitCount++
+    hit(cord) {
+        for (let hitCord of this.hitCords) {
+            if (cord.x === hitCord.x && cord.y === hitCord.y) {
+                throw new Error("Ship has already been hit at this cord")
+            }
+        }
+        this.hitCords.push(cord)
     }
     isSunk() {
         return this.hitCount >= this.length;
+    }
+    place(cords) {
+        this.cords = cords
+    }
+    get hitCount() {
+        return this.hitCords.length
     }
 }
