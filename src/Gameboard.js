@@ -72,12 +72,44 @@ export class Gameboard {
             this.missedAttacks.push(cord)
         }
     }
-    areAllShipsSunk() {
+    allShipsSunk() {
         for (let ship of this.ships) {
             if (!ship.isSunk()) {
                 return false
             }
         }
         return true
+    }
+    shipAtCord(cord) {
+        for (let ship of this.ships) {
+            for (let shipCord of ship.cords)
+            if (cord.x === shipCord.x && cord.y === shipCord.y) {
+                return ship
+            }
+        }
+        return null
+    }
+    isCordMiss(cord) {
+        for (let missCord of this.missedAttacks) {
+            if (cord.x === missCord.x && cord.y === missCord.y) {
+                return true
+            }
+        }
+        return false
+    }
+    isCordNew(cord) {
+        if (this.isCordMiss(cord)) {
+            return false
+        }
+        const ship = this.shipAtCord(cord)
+        if (ship) {
+            if(ship.isCordHit(cord)) {
+                return false
+            }
+        }
+        return true
+    }
+    placeShips() {
+
     }
 }

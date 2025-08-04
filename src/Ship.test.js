@@ -51,3 +51,20 @@ describe("Ship.is_sunk()", () => {
         expect(ship.isSunk()).toBe(false)
     })
 })
+
+describe("Ship.isCordHit()", () => {
+    test("Cord not hit", () => {
+        const ship = new Ship(5)
+        expect(ship.isCordHit({x: 0, y: 0})).toBe(false)
+    })
+    test("Cord not hit", () => {
+        const ship = new Ship(5)
+        ship.hit({x: 5, y: 5})
+        expect(ship.isCordHit({x: 0, y: 0})).toBe(false)
+    })
+    test("Cord hit", () => {
+        const ship = new Ship(5)
+        ship.hit({x: 0, y: 0})
+        expect(ship.isCordHit({x: 0, y: 0})).toBe(true)
+    })
+})

@@ -21,4 +21,12 @@ export class Ship {
     get hitCount() {
         return this.hitCords.length
     }
+    isCordHit(cord) {
+        for (let hitCord of this.hitCords) {
+            if (cord.x === hitCord.x && cord.y === hitCord.y) {
+                return true
+            }
+        }
+        return false
+    }
 }

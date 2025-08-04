@@ -1,4 +1,5 @@
 import { Gameboard } from "./Gameboard";
+import {Ship} from "./Ship";
 
 describe("Gameboard.placeShip()", () => {
     describe("Valid placements", () => {
@@ -91,12 +92,12 @@ describe("Gameboard.recieveAttack", () => {
     })
 })
 
-describe("Gameboard.areAllShipsSunk", () => {
+describe("Gameboard.allShipsSunk", () => {
     test("No ships sunk", () => {
         const gameboard = new Gameboard()
         gameboard.placeShip([{x: 1, y: 0}, {x: 2, y: 0}, {x: 3, y: 0}])
         gameboard.placeShip([{x: 1, y: 1}, {x: 2, y: 1}, {x: 3, y: 1}])
-        expect(gameboard.areAllShipsSunk()).toBe(false)
+        expect(gameboard.allShipsSunk()).toBe(false)
     })
     test("1 / 2 ships sunk", () => {
         const gameboard = new Gameboard()
@@ -105,7 +106,7 @@ describe("Gameboard.areAllShipsSunk", () => {
         for (let i = 1; i < 4; i++) {
             gameboard.recieveAttack({x: i, y: 0})
         }
-        expect(gameboard.areAllShipsSunk()).toBe(false)
+        expect(gameboard.allShipsSunk()).toBe(false)
     })
     test("all ships sunk", () => {
         const gameboard = new Gameboard()
@@ -116,6 +117,35 @@ describe("Gameboard.areAllShipsSunk", () => {
             gameboard.recieveAttack({x: i, y: 1})
 
         }
-        expect(gameboard.areAllShipsSunk()).toBe(true)
+        expect(gameboard.allShipsSunk()).toBe(true)
+    })
+})
+describe("Gameboard.shipAtCord()", () => {
+    test("Not at cord", () => {
+        const gameboard = new Gameboard()
+        gameboard.placeShip([{x: 1, y: 0}, {x: 2, y: 0}, {x: 3, y: 0}])
+        expect(gameboard.shipAtCord({x:5, y: 5})).toBe(null)
+    })
+    test("At cord", () => {
+        const gameboard = new Gameboard()
+        gameboard.placeShip([{x: 1, y: 0}, {x: 2, y: 0}, {x: 3, y: 0}])
+        expect(gameboard.shipAtCord({x:1, y: 0})).toBeTruthy()
+    })
+})
+
+describe("Gameboard.isCordMiss()", () => {
+    test("Cord not miss", () => {
+        const gameboard = new Gameboard()
+        expect(gameboard.isCordMiss({x: 0, y: 0})).toBe(false)
+    })
+    test("Cord not miss", () => {
+        const gameboard = new Gameboard()
+        gameboard.recieveAttack({x: 5, y: 5})
+        expect(gameboard.isCordMiss({x: 0, y: 0})).toBe(false)
+    })
+    test("Cord is miss", () => {
+        const gameboard = new Gameboard()
+        gameboard.recieveAttack({x: 0, y: 0})
+        expect(gameboard.isCordMiss({x: 0, y: 0})).toBe(true)
     })
 })
